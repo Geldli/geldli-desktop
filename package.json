@@ -1,0 +1,37 @@
+{
+  "name": "geldli-desktop",
+  "version": "0.0.1",
+  "description": "Geldli desktop is the desktop application for the Geldli finances manager app",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron-forge start",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Geldli/geldli-desktop.git"
+  },
+  "keywords": [
+    "finances"
+  ],
+  "author": "Geldli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Geldli/geldli-desktop/issues"
+  },
+  "homepage": "https://github.com/Geldli/geldli-desktop#readme",
+  "devDependencies": {
+    "@electron-forge/cli": "^6.4.2",
+    "@electron-forge/maker-deb": "^6.4.2",
+    "@electron-forge/maker-rpm": "^6.4.2",
+    "@electron-forge/maker-squirrel": "^6.4.2",
+    "@electron-forge/maker-zip": "^6.4.2",
+    "@electron-forge/plugin-auto-unpack-natives": "^6.4.2",
+    "electron": "^27.0.3"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0"
+  }
+}

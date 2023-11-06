@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; font-src 'self' https://fonts.gstatic.com; style-src 'self' https://fonts.googleapis.com; img-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+
+    <title>Geldli - Login</title>
+    <link rel="stylesheet" href="../styles/login.css">
+</head>
+
+<body>
+    <header>
+        <div>
+            <img src="../assets/images/logos/logo-light.svg" alt="Geldli logo" class="logo">
+            <span class="geldli">Geldli</span>
+        </div>
+
+        <img src="../assets/images/home/logo-home-user.svg" alt="Botão de Login do Usuário" class="logo">
+    </header>
+    <main>
+        <div class="boxMain">
+            <span class="titulo">Login</span>
+            <p>Faça login e acesse a sua conta Geldli para continuar a gerenciar suas finanças!</p>
+            <form action="" method="post">
+                <input type="text" name="username" id="usernameLogin" placeholder="usuario / email / telefone" class="textInput">
+                <input type="password" name="senha" id="senhaLogin" placeholder="senha" class="textInput">
+                <input type="submit" value="entrar" id="entrar">
+                <div>ou</div>
+                <input type="button" value="Continue com o Google" id="googleBtn">
+            </form><p>Não tem uma conta ainda? <span id="btnCadastro">Fazer cadastro</span></p>
+        </div>
+    </main>
+</body>
+<script src="../src/login.js"></script>
+
+</html>
