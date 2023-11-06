@@ -22,7 +22,6 @@ const getUserDataByUsername = (username) => {
 
   for(const user of usersData) {
     if(user.username === username) {
-      console.log(`user found: ${user.username}`);
       return user;
     }
   }
@@ -34,7 +33,6 @@ const getUserDataByEmail = (useremail) => {
 
   for(const user of usersData) {
     if(user.email === useremail) {
-      console.log(`user found: ${user.username}`);
       return user;
     }
   }
@@ -63,14 +61,10 @@ const login = (userIdent, password) => {
 
   let user;
 
-  console.log(userIdent);
-  console.log(password);
-
   user = getUserData(userIdent);
   if(user !== undefined) {
     if(user.password === password) {
       loggedIn = true;
-      console.log('Logged In!');
       return true;
     }
   }
@@ -82,8 +76,8 @@ const login = (userIdent, password) => {
 
 const createNewWindow = () => {
   const win = new BrowserWindow({
-    width: 800,
-    height: 750,
+    width: 1450,
+    height: 800,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,

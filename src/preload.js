@@ -8,5 +8,4 @@ contextBridge.exposeInMainWorld('extern', {
 
 contextBridge.exposeInMainWorld('currentSession', {
   login: async (username, password) => await ipcRenderer.invoke('tryLogin', username, password),
-  // wrongLoginDialog: () => dialog.showErrorBox('Dados Incorretos', 'Os dados de login inseridos estão incorretos.'),
 })

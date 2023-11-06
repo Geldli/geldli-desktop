@@ -13,8 +13,6 @@ btnEntrar.addEventListener('click', (e) => {
 
   e.preventDefault();
 
-  console.log(txtUserIdent.value);
-  console.log(txtUserPassword.value);
   currentSession.login(txtUserIdent.value, txtUserPassword.value)
     .then((result) => {
       if(result) {
