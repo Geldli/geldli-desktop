@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: calc(100vh - 15px);
+    }
+
+    form {
+      border: black solid 3px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    input {
+      margin: 10px;
+    }
+
+  </style>
+</head>
+<body>
+  <form action="">
+
+    <h1>Login</h1>
+
+    <input id="username" type="text" placeholder="username">
+    <input id="password" type="password" placeholder="password">
+    <input id="loginButton" type="button" value="Login">
+  </form>
+</body>
+<script>
+
+  const usernameInput = document.getElementById('username');
+  const passwordInput = document.getElementById('password');
+  const loginButton = document.getElementById('loginButton');
+  
+
+  loginButton.addEventListener('click', (e) => {
+    if(usernameInput.value === 'jbernardis' && passwordInput.value === '1234') {
+      window.open('geldli-desktop://loginSuccessfull');
+    } else {
+      alert(`${usernameInput.value}\n${passwordInput.value}\nNo`);
+    }
+  })
+
+</script>
+</html>
