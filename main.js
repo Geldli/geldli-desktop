@@ -23,7 +23,6 @@ function createWindow() {
   })
 
   mainWindow.loadFile('waitLogin.html');
-  
 }
 
 
@@ -38,6 +37,9 @@ if(!gotTheLock) {
       if(mainWindow.isMinimized()) mainWindow.restore();
       mainWindow.focus();
     }
+
+    dialog.showErrorBox('Welcome back', `You arrived from [${commandLine.pop()}]`)
+    mainWindow.loadURL('http://localhost:3000');
   })
 }
 
@@ -45,22 +47,24 @@ if(!gotTheLock) {
 // Unix
 app.on('open-url', (e, url) => {
   if(url === 'geldli-desktop://loginSuccessfull');
+
   dialog.showErrorBox('Welcome back', `You arrived from [${url}]`)
   mainWindow.loadURL('http://localhost:3000');
 })
 
 
+
 app.whenReady()
   .then(() => {
 
-    createWindow();
     shell.openExternal(path.join('file:///', __dirname, 'index.html'));
+    
+    createWindow();
 
     app.on('activate', () => {
       if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
   })  
-
 
 
 

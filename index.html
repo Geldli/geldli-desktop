@@ -46,6 +46,9 @@
   
 
   loginButton.addEventListener('click', (e) => {
+
+    e.preventDefault();
+
     if(usernameInput.value === 'jbernardis' && passwordInput.value === '1234') {
       window.open('geldli-desktop://loginSuccessfull');
     } else {
