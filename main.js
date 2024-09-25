@@ -1,8 +1,9 @@
 
-const { app, shell, protocol, BrowserWindow, dialog } = require('electron');
+const { app, shell, protocol, BrowserWindow, dialog, session } = require('electron');
 const path = require('path');
 
 let mainWindow;
+
 
 if(process.defaultApp) {
   if(process.argv.length >= 2) {
@@ -12,23 +13,8 @@ if(process.defaultApp) {
   }
 }
 
-
-function createWindow() {
-  mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-    }
-  })
-
-  mainWindow.loadFile('waitLogin.html');
-}
-
-
-// Windows
 const gotTheLock = app.requestSingleInstanceLock();
-
+// Windows
 if(!gotTheLock) {
   app.quit();
 } else {
@@ -38,31 +24,96 @@ if(!gotTheLock) {
       mainWindow.focus();
     }
 
+
     dialog.showErrorBox('Welcome back', `You arrived from [${commandLine.pop()}]`)
     mainWindow.loadURL('http://localhost:3000');
   })
 }
 
-
 // Unix
 app.on('open-url', (e, url) => {
-  if(url === 'geldli-desktop://loginSuccessfull');
 
-  dialog.showErrorBox('Welcome back', `You arrived from [${url}]`)
+  let expirationDay = (new Date().getDate() + 15);
+  const expirationDate = new Date()
+  expirationDate.setDate(expirationDay)
+
+
+  const queryParamsStrings = url
+    .split('//')[1]
+    .split('&')
+
+  
+  const queryParams = {};
+  queryParamsStrings.forEach((queryParamString) => {
+
+    const splitQueryParam = queryParamString.split('=');
+    queryParams[splitQueryParam[0]] = splitQueryParam[1];
+
+  })
+
+  const authToken = queryParams['authToken'];
+
+  session.defaultSession.cookies.set({
+    url: 'http://localhost:3000',
+    name: 'authToken',
+    value: authToken,
+    domain: 'localhost',
+    secure: false, // TODO change on production
+    httpOnly: true,
+    expirationDate: expirationDate
+  })
+
   mainWindow.loadURL('http://localhost:3000');
 })
 
 
+function createWindowFromUrl(initialContent) {
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+    }
+  })
+
+  mainWindow.loadURL(initialContent);
+}
+
+
+function isAuthCookieSet() {
+
+  return session.defaultSession.cookies.get({ name: 'authToken' })
+    .then(res => {
+      if(res.length === 0) {
+        return false;
+      } else {
+        return true;
+      }
+    })
+}
+
+function openAppWindow() {
+  isAuthCookieSet()
+      .then((cookieSet) => {
+        if(cookieSet) {
+          createWindowFromUrl('http://localhost:3000');
+        } else {
+          shell.openExternal('http://localhost:8000/desktopLogin');
+          createWindowFromUrl('http://localhost:8000/waitLogin')
+        }
+      })
+}
 
 app.whenReady()
   .then(() => {
 
-    shell.openExternal(path.join('file:///', __dirname, 'index.html'));
-    
-    createWindow();
+    openAppWindow();
+
 
     app.on('activate', () => {
-      if (BrowserWindow.getAllWindows().length === 0) createWindow()
+      if (BrowserWindow.getAllWindows().length === 0) {
+        openAppWindow()
+      }
     })
   })  
 
